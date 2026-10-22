@@ -11,9 +11,8 @@ VOWELS = ["a", "i", "u", "e", "o"]
 
 
 def load_wav(path):
-    """Baca file wav, kembalikan (signal, sample_rate)."""
+    """Baca file wav (mono, 16 kHz, 16-bit), kembalikan (signal, sample_rate)."""
     sr, signal = wavfile.read(path)
-    # TODO: jika stereo, ambil satu channel saja
     return signal, sr
 
 

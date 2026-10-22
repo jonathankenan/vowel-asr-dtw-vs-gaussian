@@ -9,7 +9,8 @@ from python_speech_features import delta, mfcc
 
 def extract_mfcc(signal, sr):
     """Return array (T, 39), T = jumlah frame."""
-    # TODO: mfcc(signal, sr, winlen=0.025, winstep=0.01, numcep=13, appendEnergy=True)
-    # TODO: d1 = delta(mfcc, 2), d2 = delta(d1, 2)
-    # TODO: gabungkan dengan np.hstack -> (T, 39)
-    raise NotImplementedError
+    # frame 25 ms, geser 10 ms
+    static = mfcc(signal, sr, winlen=0.025, winstep=0.01, numcep=13, appendEnergy=True)
+    d1 = delta(static, 2)
+    d2 = delta(d1, 2)
+    return np.hstack([static, d1, d2])

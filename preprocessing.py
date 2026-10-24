@@ -17,22 +17,24 @@ def load_wav(path):
 
 
 def parse_filename(filename):
-    """S01_a.wav -> ("S01", "a")"""
+    """S01_a.wav / S01_A.wav -> ("S01", "a")"""
     name = os.path.splitext(filename)[0]
     speaker, vowel = name.split("_")
-    return speaker, vowel
+    return speaker, vowel.lower()
 
 
 def load_dataset(folder):
-    """Baca semua wav di folder.
+    """Baca semua wav di folder, termasuk subfolder per anggota.
 
     Return: list of dict {"signal", "sr", "speaker", "vowel"}
     """
     data = []
-    for filename in sorted(os.listdir(folder)):
-        if not filename.endswith(".wav"):
-            continue
-        signal, sr = load_wav(os.path.join(folder, filename))
-        speaker, vowel = parse_filename(filename)
-        data.append({"signal": signal, "sr": sr, "speaker": speaker, "vowel": vowel})
+    for root, dirs, files in os.walk(folder):
+        dirs.sort()
+        for filename in sorted(files):
+            if not filename.endswith(".wav"):
+                continue
+            signal, sr = load_wav(os.path.join(root, filename))
+            speaker, vowel = parse_filename(filename)
+            data.append({"signal": signal, "sr": sr, "speaker": speaker, "vowel": vowel})
     return data

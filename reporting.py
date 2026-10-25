@@ -7,7 +7,7 @@ import numpy as np
 
 
 def format_markdown_table(headers, rows, percent=True):
-    """Format tabel Markdown tanpa ketergantungan pada IPython/notebook."""
+    """Format tabel Markdown."""
     def fmt(value):
         if isinstance(value, (int, float, np.number)):
             if not np.isfinite(value):
@@ -22,7 +22,7 @@ def format_markdown_table(headers, rows, percent=True):
 
 
 def save_predictions(results, root, output_path=None):
-    """Ekspor seluruh prediksi ke CSV; mengembalikan path file yang dibuat."""
+    """Ekspor seluruh prediksi ke CSV, mengembalikan path file yang dibuat."""
     root = Path(root).resolve()
     output_path = Path(output_path) if output_path else root / "outputs" / "predictions.csv"
     if not output_path.is_absolute():
